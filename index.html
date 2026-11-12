@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A192F">
+<title>ดอกเบี้ยบัตร</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Prompt:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script>
+  // apply saved theme before paint (default: follow the phone)
+  (function(){try{var t=localStorage.getItem('cc-theme');var d=t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();
+</script>
+<style>
+:root{
+  --navy:#0A192F; --accent:#2563EB; --accent-ring:rgba(37,99,235,.18);
+  --bg:#F3F6F9; --card:#FFFFFF; --field:#F8FAFC; --border:#EEF2F6; --border-2:#E2E8F0;
+  --ink:#0F172A; --ink-2:#1E293B; --muted:#64748B; --muted-2:#94A3B8;
+  --red:#DC2626; --green:#059669; --green-bg:#ECFDF5; --green-bd:#A7F3D0;
+  --amber:#B45309; --amber-bg:#FFFBEB; --amber-bd:#FCD34D; --blue-bg:#EFF6FF; --blue-bd:#BFDBFE; --blue-ink:#1E40AF;
+  --chip-on-bg:#0A192F; --chip-on-ink:#fff; --chip-on-sub:#CBD5E1; --thumb-bd:#0A192F; --track:#E2E8F0; --fill:#0A192F;
+  --shadow:0 8px 30px rgba(0,0,0,.06);
+  --ui:'IBM Plex Sans Thai','Prompt',system-ui,sans-serif; --display:'Prompt','IBM Plex Sans Thai',system-ui,sans-serif;
+  --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+}
+html.dark{
+  --bg:#0C121E; --card:#131B2E; --field:rgba(30,41,59,.55); --border:#1F2D47; --border-2:#334155;
+  --ink:#F8FAFC; --ink-2:#E2E8F0; --muted:#94A3B8; --muted-2:#64748B;
+  --red:#F87171; --green:#34D399; --green-bg:rgba(6,78,59,.35); --green-bd:#065F46;
+  --amber:#FCD34D; --amber-bg:rgba(120,53,15,.35); --amber-bd:#92400E; --blue-bg:rgba(30,58,138,.35); --blue-bd:#1E40AF; --blue-ink:#93C5FD;
+  --accent:#3B82F6; --accent-ring:rgba(59,130,246,.25);
+  --chip-on-bg:rgba(37,99,235,.2); --chip-on-ink:#fff; --chip-on-sub:#93C5FD; --thumb-bd:#60A5FA; --track:#25334E; --fill:#3B82F6;
+  --shadow:0 8px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink-2);font-family:var(--ui);font-size:16px;line-height:1.5}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.app{max-width:440px;margin:0 auto;min-height:100vh;padding-bottom:calc(28px + var(--safe-b))}
+
+/* header */
+.head{background:var(--navy);color:#fff;padding:calc(22px + var(--safe-t)) 20px 76px;border-radius:0 0 32px 32px}
+html.dark .head{background:#070E1C}
+.head-row{display:flex;justify-content:space-between;align-items:flex-start}
+.head h1{font-family:var(--display);font-weight:700;font-size:25px;margin:0;letter-spacing:-.01em}
+.head p{margin:2px 0 0;font-size:13px;color:#CBD5E1;font-weight:300}
+.round{width:42px;height:42px;border-radius:50%;border:none;background:rgba(255,255,255,.1);color:#E2E8F0;display:grid;place-items:center;transition:background .15s,transform .1s}
+.round:hover{background:rgba(255,255,255,.2)} .round:active{transform:scale(.95)}
+.round svg{width:20px;height:20px}
+.icons{display:flex;gap:8px}
+
+main{padding:0 16px;margin-top:-56px;display:flex;flex-direction:column;gap:16px;position:relative}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+
+/* statement */
+.card-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.card-top h2{display:flex;gap:8px;align-items:center;margin:0;font-family:var(--display);font-weight:600;font-size:15px;color:var(--ink)}
+.card-top h2 svg{width:17px;height:17px;color:var(--accent)}
+.pill{font-size:11.5px;color:var(--muted);background:var(--field);padding:2px 8px;border-radius:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.box{background:var(--field);border:1px solid var(--border);border-radius:12px;padding:9px 11px}
+.box label{display:block;font-size:12px;color:var(--muted);margin-bottom:2px}
+.box input[type=date]{border:none;background:transparent;width:100%;padding:0;font-size:14px;font-weight:500;color:var(--ink-2);outline:none;font-variant-numeric:tabular-nums}
+html.dark .box input[type=date]{color-scheme:dark}
+.money{display:flex;align-items:baseline;justify-content:flex-end;gap:6px}
+.money input{border:none;background:transparent;outline:none;width:100%;text-align:right;padding:0;font-family:var(--display);font-weight:700;font-size:26px;color:var(--ink);font-variant-numeric:tabular-nums}
+.money span{font-size:13px;color:var(--muted);font-weight:500}
+.box.big{margin-top:10px;padding:11px 13px}
+.box:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-ring)}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);cursor:pointer}
+.toggle-row b{display:block;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.toggle-row small{display:block;font-size:12px;color:var(--muted);line-height:1.3}
+.sw{appearance:none;flex:none;width:46px;height:26px;border-radius:999px;background:#CBD5E1;position:relative;cursor:pointer;transition:background .2s;margin:0}
+html.dark .sw{background:#334155}
+.sw::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.sw:checked{background:var(--accent)} .sw:checked::after{transform:translateX(20px)}
+
+/* payment */
+.pay-head{text-align:center;padding:2px 0 8px}
+.pay-head .lbl{font-size:13px;color:var(--muted);font-weight:500}
+.pay-head .amt{display:flex;justify-content:center;align-items:baseline;gap:6px;margin-top:2px}
+.pay-head .amt b{font-family:var(--display);font-weight:800;font-size:34px;color:var(--ink);letter-spacing:-.02em}
+.pay-head .amt span{font-size:14px;color:var(--muted)}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.chip{border:1px solid var(--border-2);background:var(--card);border-radius:12px;padding:9px 11px;text-align:left;transition:all .15s}
+.chip small{display:block;font-size:12px;color:var(--muted)}
+.chip b{display:block;font-size:14.5px;font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip.on{border:2px solid var(--chip-on-bg);background:var(--chip-on-bg);padding:8px 10px}
+html.dark .chip.on{border-color:var(--accent)}
+.chip.on small{color:var(--chip-on-sub)} .chip.on b{color:var(--chip-on-ink)}
+.custom{display:none;margin-top:12px}
+.custom.show{display:block}
+.custom .box{border:2px solid var(--accent);box-shadow:0 0 0 3px var(--accent-ring)}
+.custom .box label{color:var(--accent);font-weight:500}
+.custom .hint{font-size:11.5px;color:var(--muted);text-align:right;margin-top:3px}
+.custom .hint.warn{color:var(--amber)}
+.range{padding:10px 2px 0}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;margin:0;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:999px;background:linear-gradient(to right,var(--fill) var(--p,0%),var(--track) var(--p,0%))}
+input[type=range]::-moz-range-track{height:8px;border-radius:999px;background:var(--track)}
+input[type=range]::-moz-range-progress{height:8px;border-radius:999px;background:var(--fill)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--card);border:3px solid var(--thumb-bd);box-shadow:0 3px 8px rgba(0,0,0,.22);margin-top:-10px}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--card);border:3px solid var(--thumb-bd)}
+.range-lbl{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);padding:0 2px}
+.paydate{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:12px}
+.paydate span{font-size:13px;color:var(--muted)}
+.paydate input{border:1px solid var(--border-2);background:var(--field);border-radius:999px;padding:5px 12px;font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+html.dark .paydate input{color-scheme:dark}
+
+/* receipt */
+.receipt{position:relative;background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 18px 18px;padding:20px 20px 16px;margin-top:10px;box-shadow:0 18px 40px -12px rgba(0,0,0,.18)}
+.receipt::before{content:'';position:absolute;top:-10px;left:-1px;right:-1px;height:10px;background:radial-gradient(circle at 9px 0,transparent 9px,var(--card) 9.5px) repeat-x;background-size:18px 10px}
+.r-when{font-size:12.5px;color:var(--muted);font-weight:500}
+.r-title{font-family:var(--display);font-weight:600;font-size:16.5px;color:var(--ink);margin:2px 0 0}
+.r-big{display:flex;align-items:baseline;gap:8px;margin:6px 0 2px}
+.r-big b{font-family:var(--display);font-weight:800;font-size:52px;line-height:1.05;letter-spacing:-.02em;color:var(--red);transition:color .2s}
+.r-big span{font-size:16px;color:var(--muted);font-weight:500}
+.receipt.zero .r-big b{color:var(--green)}
+.r-note{font-size:12.5px;color:var(--muted)}
+.badges{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-top:10px}
+.badge{display:inline-flex;gap:6px;align-items:flex-start;font-size:12px;font-weight:500;padding:4px 10px;border-radius:12px;border:1px solid;line-height:1.4}
+.badge svg{width:14px;height:14px;flex:none;margin-top:2px}
+.badge.good{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}
+.badge.warn{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-bd)}
+.badge.info{background:var(--blue-bg);color:var(--blue-ink);border-color:var(--blue-bd)}
+.dash{border:none;border-top:1.5px dashed var(--border-2);margin:16px 0 12px}
+.kv{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;padding:3px 0}
+.kv span{color:var(--muted)} .kv b{font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.how-btn{width:100%;display:flex;justify-content:space-between;align-items:center;border:none;background:none;padding:12px 0 2px;margin-top:10px;border-top:1px solid var(--border);color:var(--accent);font-size:13px;font-weight:600}
+.how-btn svg{width:16px;height:16px;transition:transform .2s}
+.how-btn[aria-expanded=true] svg{transform:rotate(180deg)}
+.how{display:none;margin-top:8px;background:var(--field);border:1px solid var(--border);border-radius:12px;padding:10px 12px;font-size:12.5px}
+.how.open{display:block}
+.how .seg{padding:7px 0;border-bottom:1px solid var(--border)}
+.how .seg:last-child{border-bottom:none}
+.how .seg .t{font-size:11.5px;color:var(--muted);font-weight:600}
+.how .seg .f{font-variant-numeric:tabular-nums;color:var(--ink-2);display:flex;justify-content:space-between;gap:8px}
+.how .seg .f strong{color:var(--red)}
+.how .sum{text-align:right;font-weight:700;padding-top:7px;color:var(--ink-2)}
+.how .sum strong{color:var(--red)}
+
+/* payoff */
+.po-top{display:flex;gap:12px;align-items:flex-start}
+.po-ic{flex:none;width:38px;height:38px;border-radius:12px;background:var(--blue-bg);color:var(--accent);display:grid;place-items:center}
+.po-ic svg{width:20px;height:20px}
+.po-top h3{margin:0;font-size:12.5px;color:var(--muted);font-weight:600}
+.po-top p{margin:1px 0 0;font-size:14.5px;font-weight:700;color:var(--ink)}
+.po-chart{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.po-meta{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted-2);margin-bottom:8px}
+.bars{display:flex;align-items:flex-end;gap:5px;height:84px;padding:8px 8px 0;background:var(--field);border-radius:12px}
+.bars .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:3px;min-width:0}
+.bars .col i{display:block;width:100%;border-radius:3px 3px 0 0;background:var(--accent);min-height:3px;transition:height .3s}
+.bars .col.done i{background:var(--green)}
+.bars .col em{font-style:normal;font-size:10px;color:var(--muted);white-space:nowrap;padding-bottom:3px}
+.empty .receipt .r-big b{color:var(--muted-2)}
+.foot{font-size:12px;color:var(--muted);text-align:center;margin:4px 12px 0;line-height:1.5}
+
+/* settings sheet */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-width:440px;margin:0 auto;background:var(--card);border-radius:24px 24px 0 0;border-top:1px solid var(--border);padding:12px 20px calc(26px + var(--safe-b));transform:translateY(105%);visibility:hidden;transition:transform .22s ease,visibility .22s;z-index:21}
+.overlay.open{opacity:1;pointer-events:auto} .sheet.open{transform:none;visibility:visible}
+.grab{width:48px;height:5px;border-radius:9px;background:var(--border-2);margin:0 auto 14px}
+.sheet-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.sheet-h h3{margin:0;font-family:var(--display);font-weight:700;font-size:18px;color:var(--ink)}
+.x{border:none;background:none;color:var(--muted-2);padding:4px}
+.x svg{width:20px;height:20px}
+.set label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin:0 0 5px}
+.set input{width:100%;border:none;background:var(--field);border-radius:12px;padding:11px 12px;font-size:15px;font-weight:600;color:var(--ink);outline:none}
+.set input:focus{box-shadow:0 0 0 2px var(--accent)}
+.set p{font-size:12px;color:var(--muted);margin:5px 0 14px}
+.save{width:100%;margin-top:6px;border:none;border-radius:14px;background:var(--accent);color:#fff;font-family:var(--display);font-weight:700;font-size:15.5px;padding:13px;box-shadow:0 8px 20px -6px rgba(37,99,235,.5)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="head">
+    <div class="head-row">
+      <div><h1>ดอกเบี้ยบัตร</h1><p>บิลหน้าจะเสียดอกเบี้ยเท่าไร</p></div>
+      <div class="icons">
+        <button class="round" id="themeBtn" aria-label="สลับโหมดมืด/สว่าง">
+          <svg id="icMoon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <svg id="icSun" style="display:none;color:#FCD34D" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </button>
+        <button class="round" id="openSet" aria-label="ตั้งค่าการคำนวณ">
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- statement -->
+    <section class="card" aria-label="ข้อมูลจากใบแจ้งหนี้">
+      <div class="card-top">
+        <h2><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>จากใบแจ้งหนี้</h2>
+        <span class="pill">รอบบิลปัจจุบัน</span>
+      </div>
+      <div class="grid2">
+        <div class="box"><label for="stmt">ยอดเงินถึงวันที่</label><input type="date" id="stmt"></div>
+        <div class="box"><label for="due">กำหนดชำระ</label><input type="date" id="due"></div>
+      </div>
+      <div class="box big">
+        <label for="bal">ยอดรวมที่ต้องชำระ</label>
+        <div class="money"><input id="bal" inputmode="decimal" autocomplete="off" placeholder="0.00"><span>บาท</span></div>
+      </div>
+      <label class="toggle-row"><span><b>เดือนก่อนจ่ายเต็มจำนวน</b><small>ยอดนี้เป็นการใช้จ่ายใหม่ทั้งหมด</small></span><input type="checkbox" class="sw" id="prev"></label>
+    </section>
+
+    <!-- payment -->
+    <section class="card" aria-label="จำนวนที่จะจ่าย">
+      <div class="pay-head"><div class="lbl">รอบนี้จะจ่าย</div><div class="amt"><b class="num" id="payShow">—</b><span>บาท</span></div></div>
+      <div class="chips" role="radiogroup" aria-label="เลือกจำนวนที่จะจ่าย">
+        <button class="chip" id="cMin" role="radio"><small>ขั้นต่ำ</small><b id="vMin">—</b></button>
+        <button class="chip" id="cFull" role="radio"><small>เต็มจำนวน</small><b id="vFull">—</b></button>
+        <button class="chip" id="cCus" role="radio"><small>ระบุเอง</small><b id="vCus">กรอกจำนวน</b></button>
+      </div>
+      <div class="custom" id="cusBox">
+        <div class="box">
+          <label for="amt">จำนวนที่จะจ่าย</label>
+          <div class="money"><input id="amt" inputmode="decimal" autocomplete="off" placeholder="0.00"><span>บาท</span></div>
+        </div>
+        <div class="hint" id="cusHint"></div>
+      </div>
+      <div class="range">
+        <input type="range" id="slider" min="0" max="1000" step="1" aria-label="เลื่อนเลือกจำนวนที่จะจ่าย">
+        <div class="range-lbl"><span id="rMin">ขั้นต่ำ</span><span id="rMax">เต็มจำนวน</span></div>
+      </div>
+      <div class="paydate"><span>จ่ายวันที่</span><input type="date" id="payDate" aria-label="วันที่จ่าย"></div>
+    </section>
+
+    <!-- next bill slip -->
+    <article class="receipt" id="slip" aria-live="polite">
+      <div class="r-when" id="when">—</div>
+      <h3 class="r-title">ดอกเบี้ยในบิลหน้า</h3>
+      <div class="r-big"><b class="num" id="int">—</b><span>บาท</span></div>
+      <div class="r-note" id="note"></div>
+      <div class="badges" id="badges"></div>
+      <hr class="dash">
+      <div class="kv"><span>ยอดบิลหน้า</span><b id="nBal">—</b></div>
+      <div class="kv"><span>ขั้นต่ำครั้งหน้า</span><b id="nMin">—</b></div>
+      <button class="how-btn" id="howBtn" aria-expanded="false"><span>ดูวิธีคิดดอกเบี้ย</span><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></button>
+      <div class="how" id="how"></div>
+    </article>
+
+    <!-- payoff -->
+    <section class="card" aria-label="คาดการณ์ถ้าจ่ายยอดนี้ต่อไป">
+      <div class="po-top">
+        <div class="po-ic"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg></div>
+        <div><h3 id="poTitle">ถ้าจ่ายเท่านี้ทุกเดือน</h3><p id="poHead">—</p></div>
+      </div>
+      <div class="po-chart">
+        <div class="po-meta"><span>ยอดหนี้แต่ละบิล</span><span id="poDur"></span></div>
+        <div class="bars" id="bars" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <p class="foot">คิดดอกเบี้ยรายวันตามวิธีในเอกสารของธนาคาร (ยอด × อัตราต่อปี × จำนวนวัน / 365) ยังไม่รวมค่าปรับหรือค่าทวงถามกรณีจ่ายช้า</p>
+  </main>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="sheet" id="sheet" role="dialog" aria-label="ตั้งค่าการคำนวณ">
+  <div class="grab"></div>
+  <div class="sheet-h"><h3>ตั้งค่าการคำนวณ</h3><button class="x" id="xSet" aria-label="ปิด"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg></button></div>
+  <div class="set">
+    <label for="rate">อัตราดอกเบี้ยต่อปี (%)</label>
+    <input id="rate" inputmode="decimal">
+    <p>ดูได้จากเงื่อนไขบัตรของคุณ ค่าเริ่มต้นคือ 16% ตามเอกสารธนาคาร</p>
+    <label for="minPct">จ่ายขั้นต่ำ (%)</label>
+    <input id="minPct" inputmode="decimal">
+    <p id="minHelp">เช็กได้จากใบแจ้งหนี้: ยอดขั้นต่ำ ÷ ยอดรวม × 100</p>
+  </div>
+  <button class="save" id="saveSet">บันทึกการตั้งค่า</button>
+</div>
+
+<script>
+// ===== Credit card interest engine (follows the bank's worked examples) =====
+// Dates are handled as integer day numbers (UTC) to avoid timezone drift.
+const DAY = 86400000;
+function ymd(y, m, d) { return Math.round(Date.UTC(y, m, d) / DAY); }
+function parseDate(s) { const [y, m, d] = s.split('-').map(Number); return ymd(y, m - 1, d); }
+function toParts(n) { const dt = new Date(n * DAY); return [dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate()]; }
+function dim(y, m) { return new Date(Date.UTC(y, m + 1, 0)).getUTCDate(); }
+function addMonthsDay(n, k, day) { // same "day of month" k months later, clamped
+  let [y, m] = toParts(n); m += k; y += Math.floor(m / 12); m = ((m % 12) + 12) % 12;
+  return ymd(y, m, Math.min(day, dim(y, m)));
+}
+function r2(x) { return Math.round((x + (x >= 0 ? 1e-9 : -1e-9)) * 100) / 100; }
+
+/*
+cfg: { rate (annual %, e.g. 16), stmtDay, dueDay, minPct, cashFeePct, vatPct,
+       firstStmt (day number), openBal, openExtra (part of openBal that is interest/fees),
+       openGrace (bool), cycles }
+plan: array per cycle k (payment against statement k): { mode:'custom'|'min'|'full'|'none', amount, date (day number or null => due date) }
+txns: [{date, type:'buy'|'cash', amount, note}]
+*/
+function simulate(cfg, plan, txns) {
+  const rate = cfg.rate / 100;
+  const N = cfg.cycles;
+  const stmtDates = [], dueDates = [];
+  const [fy, fm] = toParts(cfg.firstStmt);
+  for (let k = 0; k <= N; k++) {
+    const s = addMonthsDay(cfg.firstStmt, k, cfg.stmtDay);
+    stmtDates.push(s);
+    const [sy, sm] = toParts(s);
+    let dy = sy, dmn = sm;
+    if (cfg.dueDay <= cfg.stmtDay) { dmn++; if (dmn > 11) { dmn = 0; dy++; } }
+    dueDates.push(ymd(dy, dmn, Math.min(cfg.dueDay, dim(dy, dmn))));
+  }
+  const stmtIndexFor = d => { for (let k = 0; k <= N; k++) if (d <= stmtDates[k]) return k; return N + 1; };
+
+  // State
+  let cash = 0;               // cash-advance principal (always interest-bearing, no grace)
+  let cohorts = [];           // purchase principal by the statement that bills it: {k, amt, deferred:[records]}
+  let extraBearing = 0;       // billed interest/fees past their due date (interest-bearing)
+  let extraPending = 0;       // billed interest/fees before due date (not yet interest-bearing)
+  let feesUnbilled = 0;       // cash-advance fees waiting for next statement
+  let billableRecs = [];      // interest records to be billed on next statement
+  let credit = 0;
+  let inGrace = !!cfg.openGrace;
+  const statements = [];
+  const warnings = [];
+
+  // opening balance billed on statement 0
+  const openPrin = Math.max(0, (cfg.openBal || 0) - (cfg.openExtra || 0));
+  const openExtra = Math.max(0, Math.min(cfg.openExtra || 0, cfg.openBal || 0));
+
+  const txByDay = new Map();
+  for (const t of txns) { if (!(t.amount > 0) || t.date == null) continue; if (!txByDay.has(t.date)) txByDay.set(t.date, []); txByDay.get(t.date).push(t); }
+  const payByDay = new Map();
+  plan.slice(0, N).forEach((p, k) => {
+    if (!p || p.mode === 'none') return;
+    const d = p.date != null ? p.date : dueDates[k];
+    if (d <= stmtDates[k]) { warnings.push({ k, msg: 'วันที่จ่ายต้องอยู่หลังวันสรุปยอด' }); return; }
+    if (!payByDay.has(d)) payByDay.set(d, []);
+    payByDay.get(d).push({ k, ...p });
+  });
+
+  let start = cfg.firstStmt - 31;
+  for (const t of txns) if (t.date != null && t.amount > 0) start = Math.min(start, t.date);
+  const end = stmtDates[N];
+  let segStart = start;
+  const paidSince = new Array(N + 1).fill(0);
+
+  function closeSeg(to) {
+    if (to < segStart) return;
+    const days = to - segStart + 1;
+    const mk = (base, kind) => ({ from: segStart, to, days, base: r2(base), amount: r2(base * rate * days / 365), kind });
+    const extraBase = cash + extraBearing;
+    if (extraBase > 0.004) {
+      if (cash > 0.004) billableRecs.push(mk(cash, 'เงินสดล่วงหน้า'));
+      if (extraBearing > 0.004) billableRecs.push(mk(extraBearing, 'ดอกเบี้ย/ค่าธรรมเนียมค้างชำระ'));
+    }
+    for (const c of cohorts) {
+      if (c.amt <= 0.004) continue;
+      const rec = mk(c.amt, c.k <= 0 && c.open ? 'ยอดยกมา' : 'ยอดซื้อสินค้า');
+      if (inGrace) { rec.status = 'deferred'; c.deferred.push(rec); }
+      else billableRecs.push(rec);
+    }
+    segStart = to + 1;
+  }
+  function applyPayment(amt) {
+    let left = amt;
+    const take = (v) => { const x = Math.min(v, left); left -= x; return v - x; };
+    // Thai BOT order: fees/interest first, then principal (cash first, then oldest purchases)
+    extraBearing = take(extraBearing);
+    extraPending = take(extraPending);
+    cash = take(cash);
+    for (const c of cohorts) c.amt = take(c.amt);
+    cohorts = cohorts.filter(c => c.amt > 0.004 || c.deferred.length);
+    credit += left;
+  }
+  function outstanding() { return cash + extraBearing + extraPending + cohorts.reduce((s, c) => s + c.amt, 0); }
+
+  let prevStmtBal = 0;
+  for (let d = start; d <= end; d++) {
+    const tx = txByDay.get(d) || [];
+    const pays = payByDay.get(d) || [];
+    const dueK = dueDates.indexOf(d);
+    const isOpen = d === cfg.firstStmt;
+    if (tx.length || pays.length || dueK >= 0) closeSeg(d - 1);
+
+    for (const t of tx) {
+      let amt = t.amount;
+      const use = Math.min(credit, amt); credit -= use; amt -= use;
+      if (t.type === 'cash') { cash += amt; feesUnbilled += r2(t.amount * (cfg.cashFeePct / 100) * (1 + cfg.vatPct / 100)); }
+      else cohorts.push({ k: stmtIndexFor(d), amt, deferred: [] });
+    }
+    for (const p of pays) {
+      const st = statements[p.k];
+      let amt = p.mode === 'min' ? st.minPay : p.mode === 'full' ? Math.max(0, st.balance - paidSince[p.k]) : (p.amount || 0);
+      amt = r2(amt);
+      if (amt > 0) { applyPayment(amt); paidSince[p.k] += amt; st.paid += amt; st.payDates.push(d); }
+      if (d > dueDates[p.k]) st.late = true;
+    }
+    if (dueK >= 0 && statements[dueK]) {
+      const st = statements[dueK];
+      extraBearing += extraPending; extraPending = 0;
+      const full = paidSince[dueK] >= st.balance - 0.005;
+      st.paidInFull = full;
+      st.belowMin = paidSince[dueK] < st.minPay - 0.005;
+      if (full) {
+        for (const c of cohorts) if (c.k <= dueK) { c.deferred.forEach(r => r.status = 'waived'); st.waived = (st.waived || 0) + c.deferred.reduce((s, r) => s + r.amount, 0); c.deferred = []; }
+        inGrace = true;
+      } else {
+        for (const c of cohorts) { c.deferred.forEach(r => { r.status = 'billed'; billableRecs.push(r); }); c.deferred = []; }
+        inGrace = false;
+      }
+      cohorts = cohorts.filter(c => c.amt > 0.004 || c.deferred.length);
+    }
+
+    const k = stmtDates.indexOf(d);
+    if (k >= 0) {
+      closeSeg(d);
+      if (k === 0 && (openPrin > 0 || openExtra > 0)) {
+        if (openPrin > 0) cohorts.push({ k: 0, amt: openPrin, deferred: [], open: true });
+        extraPending += openExtra;
+      }
+      billableRecs.sort((a, b) => a.from - b.from);
+      const interest = r2(billableRecs.reduce((s, r) => s + r.amount, 0));
+      const fees = r2(feesUnbilled);
+      extraPending += interest + fees;
+      feesUnbilled = 0;
+      let bal = r2(outstanding() - credit);
+      const st = {
+        k, date: d, due: dueDates[k], prevBalance: prevStmtBal, interest, fees, recs: billableRecs,
+        newSpend: 0, balance: Math.max(0, bal), credit: bal < 0 ? -bal : 0,
+        minPay: r2(Math.max(0, bal) * cfg.minPct / 100), paid: 0, payDates: [],
+      };
+      billableRecs = [];
+      statements.push(st);
+      prevStmtBal = st.balance;
+    }
+  }
+  // new spending per cycle
+  for (const t of txns) { if (!(t.amount > 0) || t.date == null) continue; const k = stmtIndexFor(t.date); if (statements[k]) statements[k].newSpend += t.amount; }
+  // payments made towards statement k are reported on statement k+1 as "paid last cycle"
+  return { statements, stmtDates, dueDates, warnings };
+}
+if (typeof module !== 'undefined') module.exports = { simulate, parseDate, toParts, r2 };
+
+</script>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const fmt=x=>(x==null||isNaN(x))?'—':x.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const num=s=>{const v=parseFloat(String(s??'').replace(/[^0-9.\-]/g,''));return isNaN(v)?0:v;};
+const TH=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const yy=y=>String((y+543)%100).padStart(2,'0');
+const dL=n=>{const[y,m,d]=toParts(n);return d+' '+TH[m]+' '+yy(y);};
+const dM=n=>{const[y,m]=toParts(n);return TH[m];};
+const dS=n=>{const[,m,d]=toParts(n);return d+'/'+(m+1);};
+const iso=n=>{const[y,m,d]=toParts(n);return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');};
+const svg={
+  ok:'<svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>',
+  warn:'<svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>',
+  info:'<svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+};
+
+const DEF={stmt:'',due:'',bal:'',prev:false,pay:'min',amt:'',payDate:'',rate:'16',minPct:'8'};
+let S; try{S=Object.assign({},DEF,JSON.parse(localStorage.getItem('cc-app-v4')||'{}'));}catch(e){S={...DEF};}
+const save=()=>{try{localStorage.setItem('cc-app-v4',JSON.stringify(S));}catch(e){}};
+
+// ---- theme ----
+function syncThemeIcon(){const d=document.documentElement.classList.contains('dark');$('icMoon').style.display=d?'none':'';$('icSun').style.display=d?'':'none';
+  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=d?'#070E1C':'#0A192F';}
+$('themeBtn').onclick=()=>{const d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('cc-theme',d?'dark':'light');}catch(e){}syncThemeIcon();};
+syncThemeIcon();
+
+// ---- inputs ----
+['stmt','due','bal','payDate'].forEach(k=>{const e=$(k);e.value=S[k];e.addEventListener('input',()=>{S[k]=e.value;run();});});
+$('bal').addEventListener('blur',()=>{if(num(S.bal)>0){S.bal=fmt(num(S.bal));$('bal').value=S.bal;save();}});
+$('prev').checked=!!S.prev;$('prev').addEventListener('change',()=>{S.prev=$('prev').checked;run();});
+$('cMin').onclick=()=>{S.pay='min';run();};
+$('cFull').onclick=()=>{S.pay='full';run();};
+$('cCus').onclick=()=>{if(S.pay!=='custom'){S.pay='custom';if(!num(S.amt))S.amt=fmt(Math.round(num(S.bal)/2));}run();setTimeout(()=>{$('amt').focus();$('amt').select();},30);};
+$('amt').value=S.amt;
+$('amt').addEventListener('input',()=>{S.amt=$('amt').value;run();});
+$('amt').addEventListener('blur',()=>{if(num(S.amt)){S.amt=fmt(num(S.amt));$('amt').value=S.amt;save();}});
+$('slider').addEventListener('input',()=>{
+  const bal=num(S.bal),min=minOf(bal),v=Math.round((min+(bal-min)*$('slider').value/1000)*100)/100;
+  if($('slider').value>=999)S.pay='full';else if($('slider').value<=1)S.pay='min';
+  else{S.pay='custom';S.amt=fmt(Math.round(v));$('amt').value=S.amt;}
+  run();
+});
+$('howBtn').onclick=()=>{const o=!$('how').classList.contains('open');$('how').classList.toggle('open',o);$('howBtn').setAttribute('aria-expanded',o);};
+
+// ---- settings sheet ----
+const sheet=o=>{$('sheet').classList.toggle('open',o);$('overlay').classList.toggle('open',o);if(o){$('rate').value=S.rate;$('minPct').value=S.minPct;const b=num(S.bal);$('minHelp').textContent='เช็กได้จากใบแจ้งหนี้: ยอดขั้นต่ำ ÷ ยอดรวม × 100';}};
+$('openSet').onclick=()=>sheet(true);$('xSet').onclick=()=>sheet(false);$('overlay').onclick=()=>sheet(false);
+$('saveSet').onclick=()=>{const r=num($('rate').value),m=num($('minPct').value);if(r>=0)S.rate=String(r);if(m>0)S.minPct=String(m);sheet(false);run();};
+
+// ---- calculation (engine verified against the bank's worked examples) ----
+const minOf=bal=>Math.round(bal*num(S.minPct))/100;
+function setup(cycles){
+  const stmt=parseDate(S.stmt),due=parseDate(S.due);
+  const[,,sd]=toParts(stmt),[,,dd]=toParts(due);
+  const bal=num(S.bal),grace=!!S.prev;
+  return{cfg:{rate:num(S.rate),minPct:num(S.minPct),stmtDay:sd,dueDay:dd,cashFeePct:2.5,vatPct:7,cycles,firstStmt:stmt,openBal:grace?0:bal,openExtra:0,openGrace:grace},
+         // exact spending dates are unknown: assume the middle of the previous cycle
+         txns:grace&&bal>0?[{date:stmt-15,type:'buy',amount:bal}]:[]};
+}
+function payPlan(){const bal=num(S.bal);
+  if(S.pay==='min')return{mode:'min'};
+  if(S.pay==='full')return{mode:'full'};
+  const a=num(S.amt);return a>=bal?{mode:'full'}:{mode:'custom',amount:a};}
+function badge(kind,text){const d=document.createElement('div');d.className='badge '+kind;d.innerHTML=svg[kind==='good'?'ok':kind];const s=document.createElement('span');s.textContent=text;d.appendChild(s);$('badges').appendChild(d);}
+
+function run(){
+  save();
+  const ready=S.stmt&&S.due&&num(S.bal)>0&&S.due>S.stmt;
+  document.body.classList.toggle('empty',!ready);
+  if(!ready){
+    $('when').textContent='ยังไม่มีข้อมูลบิล';$('int').textContent='—';
+    $('note').textContent=S.stmt&&S.due&&S.due<=S.stmt?'วันกำหนดชำระต้องอยู่หลังวันที่ในใบแจ้งหนี้':'กรอก 3 ค่าจากใบแจ้งหนี้: ยอดเงินถึงวันที่ กำหนดชำระ และยอดรวมที่ต้องชำระ';
+    ['vMin','vFull','payShow','nBal','nMin'].forEach(i=>$(i).textContent='—');$('badges').innerHTML='';$('how').innerHTML='';
+    $('poHead').textContent='จะแสดงเมื่อกรอกข้อมูลบิลแล้ว';$('bars').innerHTML='';$('poDur').textContent='';return;
+  }
+  const stmt=parseDate(S.stmt),due=parseDate(S.due),bal=num(S.bal),min=minOf(bal);
+  // chips
+  $('vMin').textContent=fmt(min);$('vFull').textContent=fmt(bal);
+  [['cMin','min'],['cFull','full'],['cCus','custom']].forEach(([id,m])=>{$(id).classList.toggle('on',S.pay===m);$(id).setAttribute('aria-checked',S.pay===m);});
+  $('vCus').textContent=S.pay==='custom'&&num(S.amt)?fmt(num(S.amt)):'กรอกจำนวน';
+  $('cusBox').classList.toggle('show',S.pay==='custom');
+  const pay=S.pay==='min'?min:S.pay==='full'?bal:Math.min(num(S.amt),bal);
+  $('payShow').textContent=fmt(pay);
+  // custom hint
+  const h=$('cusHint');h.classList.remove('warn');
+  if(S.pay==='custom'){
+    const a=num(S.amt);
+    if(!a)h.textContent='กรอกจำนวนเงินที่จะจ่ายรอบนี้';
+    else if(a>bal){h.textContent='เกินยอดที่ต้องชำระ ระบบจะคิดเท่ากับเต็มจำนวน';}
+    else if(a<min-0.005){h.textContent='น้อยกว่าขั้นต่ำ อาจโดนค่าทวงถามและเสียประวัติเครดิต';h.classList.add('warn');}
+    else h.textContent=`ขั้นต่ำ ${fmt(min)} · เต็มจำนวน ${fmt(bal)}`;
+  }
+  // slider (range: minimum → full)
+  const p=bal>min?Math.max(0,Math.min(1,(pay-min)/(bal-min))):1;
+  if(document.activeElement!==$('slider'))$('slider').value=Math.round(p*1000);
+  $('slider').style.setProperty('--p',(p*100)+'%');
+  $('rMin').textContent=`ขั้นต่ำ ${fmt(num(S.minPct))}% (${fmt(min)})`.replace('.00%','%');
+  $('rMax').textContent=`เต็มจำนวน (${fmt(bal)})`;
+  if(!S.payDate)$('payDate').value=S.due;
+  $('payDate').min=iso(stmt+1);
+
+  // next bill
+  const{cfg,txns}=setup(1);
+  const pd=S.payDate?parseDate(S.payDate):null;
+  const r=simulate(cfg,[{...payPlan(),date:pd}],txns);
+  const n=r.statements[1],paid=r.statements[0].paid,zero=n.interest<0.005;
+  $('slip').classList.toggle('zero',zero);
+  $('when').textContent=`บิลวันที่ ${dL(n.date)} • ครบกำหนด ${dL(n.due)}`;
+  $('int').textContent=fmt(n.interest);
+  $('note').textContent=`เมื่อจ่าย ${fmt(paid)} บาท วันที่ ${dL(pd||due)}`;
+  $('nBal').textContent=fmt(n.balance)+' บาท';
+  $('nMin').textContent=(n.balance>0?fmt(n.minPay):'0.00')+' บาท';
+  $('badges').innerHTML='';
+  if(zero)badge('good','จ่ายเต็มจำนวนตรงเวลา ไม่เสียดอกเบี้ย');
+  if(paid<min-0.005)badge('warn',`จ่ายต่ำกว่าขั้นต่ำ ${fmt(min)} บาท อาจโดนค่าทวงถามและเสียประวัติเครดิต`);
+  if(pd&&pd>due)badge('warn','จ่ายหลังวันครบกำหนด อาจมีค่าปรับเพิ่ม (ยังไม่รวมในตัวเลขนี้)');
+  if(!S.prev&&S.pay!=='min'&&paid>=bal-0.005&&!zero)badge('info',`ยังมีดอกเบี้ยเพราะมียอดค้างยกมา ธนาคารคิดช่วง ${dS(stmt+1)}–${dS((pd||due)-1)} ก่อนวันที่คุณจ่าย ถ้าเดือนหน้าจ่ายเต็มอีกครั้งจะไม่เสียดอกเบี้ย`);
+  else if(!zero&&paid>=min-0.005&&paid<bal-0.005)badge('info',paid>min+0.5?'จ่ายมากกว่าขั้นต่ำ ช่วยลดดอกเบี้ยรอบถัดไปได้':'จ่ายขั้นต่ำ ยอดที่เหลือจะถูกคิดดอกเบี้ยต่อทุกวัน');
+  if(S.prev&&!zero)badge('info','ค่าประมาณ: ธนาคารคิดดอกเบี้ยย้อนไปถึงวันที่ใช้จ่ายจริง (สมมติว่าใช้จ่ายกลางรอบบิลก่อน)');
+
+  // formula
+  const how=$('how');how.innerHTML='';
+  if(!n.recs.length){const d=document.createElement('div');d.className='seg';d.textContent='ไม่มีดอกเบี้ยในรอบนี้';how.appendChild(d);}
+  n.recs.forEach((x,i)=>{
+    const d=document.createElement('div');d.className='seg';
+    const t=document.createElement('div');t.className='t';t.textContent=`ช่วงที่ ${i+1}: ${dS(x.from)} – ${dS(x.to)} (${x.days} วัน)${x.status==='billed'?' · คิดย้อนหลัง':''}`;
+    const f=document.createElement('div');f.className='f';
+    const a=document.createElement('span');a.textContent=`(${fmt(x.base)} × ${S.rate}%) × ${x.days} / 365`;
+    const b=document.createElement('strong');b.textContent=fmt(x.amount);
+    f.append(a,b);d.append(t,f);how.appendChild(d);
+  });
+  const sum=document.createElement('div');sum.className='sum';sum.append('รวมดอกเบี้ย = ');const ss=document.createElement('strong');ss.textContent=fmt(n.interest);sum.append(ss,' บาท');how.appendChild(sum);
+
+  // payoff projection
+  const N=60,ps=setup(N);
+  const st=simulate(ps.cfg,Array.from({length:N},payPlan),ps.txns).statements;
+  const end=st.findIndex((x,i)=>i>0&&x.balance<0.005),last=end>0?end:N;
+  const tot=st.slice(1,last+1).reduce((a,x)=>a+x.interest,0);
+  const what=S.pay==='min'?'จ่ายขั้นต่ำ':S.pay==='full'||pay>=bal?'จ่ายเต็มจำนวน':`จ่าย ${fmt(pay)} บาท`;
+  $('poTitle').textContent=`ถ้า${what}ทุกเดือน`;
+  $('poHead').textContent=pay<=0?'หนี้จะเพิ่มขึ้นทุกเดือน'
+    :end===1&&tot<0.005?'หมดหนี้ในรอบนี้ ไม่เสียดอกเบี้ย'
+    :end>0?`หมดหนี้ใน ${end} เดือน เสียดอกเบี้ยรวม ${fmt(tot)} บาท`
+    :`อีก 5 ปียังไม่หมด เหลือ ${fmt(st[N].balance)} บาท ดอกเบี้ยรวม ${fmt(tot)} บาท`;
+  const shown=Math.min(end>0?end:12,12);
+  $('poDur').textContent=end>0?`${end} เดือน`:'แสดง 12 เดือนแรก';
+  const bars=$('bars');bars.innerHTML='';
+  const mx=Math.max(...st.slice(0,shown+1).map(x=>x.balance),1);
+  for(let i=0;i<=shown;i++){
+    const c=document.createElement('div');c.className='col'+(i===end?' done':'');
+    const b=document.createElement('i');b.style.height=Math.max(3,st[i].balance/mx*100)*0.78+'%';
+    const l=document.createElement('em');l.textContent=dM(st[i].date);
+    c.append(b,l);bars.appendChild(c);
+  }
+}
+run();
+if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(()=>{});}catch(e){}}
+})();
+</script>
+</body>
+</html>
